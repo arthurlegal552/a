@@ -3,24 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eaglercraft 1.12</title>
+    <title>Eaglercraft 1.12 - Login</title>
     <link rel="icon" type="image/png" href="fav.png">
-    <link rel="stylesheet" href="css.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #1a1a1a;
+            color: white;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .login-container {
+            background-color: #2d2d2d;
+            border-radius: 10px;
+            padding: 20px;
+            width: 300px;
+            margin: 50px auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            text-align: center;
+        }
+        
+        .login-container h2 {
+            margin-bottom: 20px;
+        }
+        
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: none;
+            box-sizing: border-box;
+        }
+        
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            border-radius: 25px;
+            border: none;
+            background-color: chartreuse;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        
+        .login-container button:hover {
+            background-color: #7fff00;
+        }
+        
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* Your original game buttons style */
+        .game-content {
+            display: none;
+            text-align: center;
+            margin-top: 50px;
+        }
+        
+        .game-content button {
+            border-radius: 25px;
+            font-size: 20px;
+            padding: 10px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+        }
+        
+        #btn-1-12 {
+            background-color: chartreuse;
+            width: 100px;
+        }
+        
+        #btn-1-8 {
+            background-color: aquamarine;
+            width: 150px;
+        }
+        
+        #btn-packs {
+            background-color: cadetblue;
+            width: 200px;
+        }
+    </style>
 </head>
 <body>
-    <center>
+    <!-- Login Form (shown by default) -->
+    <div class="login-container" id="loginForm">
+        <h2>Eaglercraft Login</h2>
+        <img src="fav.png" alt="Eaglercraft" width="100" style="margin-bottom: 20px;">
+        <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="off">
+        <button onclick="checkPassword()">Login</button>
+        <p class="error-message" id="errorMessage">Incorrect password!</p>
+    </div>
+    
+    <!-- Game Content (hidden until login) -->
+    <div class="game-content" id="gameContent">
         <h1>Eaglercraft</h1>
         <a href="1.12.html">
- <button style="border-radius: 25px; font-size: 20px; width: 100px; background-color: chartreuse;">Play 1.12</button>
-        </a>    
+            <button id="btn-1-12">Play 1.12</button>
+        </a>
         <a href="1.8.8.html">
-            <button style="border-radius: 25px; font-size: 20px; width: 150px; background-color: aquamarine;">Play 1.8.8</button>
+            <button id="btn-1-8">Play 1.8.8</button>
         </a>
         <a href="packs.html">
-            <button style="border-radius: 25px; font-size: 20px; width: 200px; background-color: cadetblue;">Texture Packs</button>
-                   </a>    
-        
+            <button id="btn-packs">Texture Packs</button>
+        </a>
+    </div>
 
-    </center>
+    <script>
+        // SHA-256 Password Hashing
+        async function sha256(message) {
+            // Convert the message to a Uint8Array
+            const msgBuffer = new TextEncoder().encode(message);
+            
+            // Hash the message
+            const hashBuffer = await crypto.subtle.digest('SHA-256', msgBuffer);
+            
+            // Convert the hash to a hex string
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            
+            return hashHex;
+        }
+
+        // Password Check Function
+        async function checkPassword() {
+            const passwordInput = document.getElementById("passwordInput").value;
+            const errorMessage = document.getElementById("errorMessage");
+            
+            // Clear any previous error
+            errorMessage.style.display = "none";
+            
+            if (!passwordInput) {
+                errorMessage.textContent = "Please enter a password";
+                errorMessage.style.display = "block";
+                return;
+            }
+            
+            // Hash the input password
+            const inputHash = await sha256(passwordInput);
+            
+            // This is the SHA-256 hash of "eaglercraft" (change this to your desired password)
+            const correctHash = "nothere2004";
+            
+            if (inputHash === correctHash) {
+                // Successful login
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("gameContent").style.display = "block";
+                
+                // Set session cookie (expires when browser closes)
+                document.cookie = "eaglercraftAuth=true; path=/; SameSite=Strict";
+            } else {
+                // Failed login
+                errorMessage.textContent = "you have failed";
+                errorMessage.style.display = "block";
+                
+                // Clear the password field
+                document.getElementById("passwordInput").value = "";
+            }
+        }
+        
+        // Check for existing session on page load
+        window.onload = function() {
+            if (document.cookie.includes("eaglercraftAuth=true")) {
+                document.getElementById("loginForm").style.display = "none";
+                document.getElementById("gameContent").style.display = "block";
+            }
+            
+            // Allow pressing Enter to submit
+            document.getElementById("passwordInput").addEventListener("keyup", function(event) {
+                if (event.key === "Enter") {
+                    checkPassword();
+                }
+            });
+        };
+    </script>
 </body>
 </html>
