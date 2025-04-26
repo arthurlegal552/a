@@ -3,140 +3,281 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eaglercraft Login</title>
+    <title>Eaglercraft Portal</title>
     <link rel="icon" type="image/png" href="fav.png">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #1a1a1a;
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
             color: white;
             margin: 0;
             padding: 0;
             text-align: center;
+            overflow-x: hidden;
         }
-        
-        .login-container {
-            background-color: #2d2d2d;
-            border-radius: 10px;
-            padding: 20px;
+
+        /* Introduction Screen */
+        #introScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a3a, #0d1520);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease-out;
+        }
+
+        #introScreen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-image {
             width: 300px;
+            height: 300px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .intro-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px rgba(100, 200, 255, 0.7);
+        }
+
+        .intro-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .enter-button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg, #00c6ff, #0072ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .enter-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
+        }
+
+        /* Login Container */
+        #loginContainer {
+            display: none;
+            background-color: rgba(45, 45, 45, 0.9);
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
             margin: 50px auto;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(5px);
         }
-        
-        .login-container h2 {
-            margin-bottom: 20px;
+
+        #loginContainer h2 {
+            margin-bottom: 25px;
+            font-size: 1.8rem;
         }
-        
-        .login-container input {
+
+        #passwordInput {
             width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border-radius: 5px;
-            border: none;
-            box-sizing: border-box;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            border: 2px solid #444;
+            background-color: #333;
+            color: white;
+            font-size: 1rem;
         }
-        
-        .login-container button {
+
+        #loginButton {
             width: 100%;
-            padding: 10px;
-            border-radius: 25px;
+            padding: 12px;
+            border-radius: 8px;
             border: none;
-            background-color: chartreuse;
+            background: linear-gradient(90deg, #00ff88, #00c6ff);
             color: black;
             font-weight: bold;
+            font-size: 1rem;
             cursor: pointer;
-            margin-top: 10px;
-            font-size: 16px;
+            transition: all 0.3s;
         }
-        
+
+        #loginButton:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.5);
+        }
+
         .error-message {
-            color: red;
-            margin-top: 10px;
+            color: #ff4444;
+            margin-top: 15px;
             display: none;
         }
-        
+
+        /* Game Content */
         #gameContent {
             display: none;
             margin-top: 50px;
+            animation: fadeIn 1s ease-out;
         }
-        
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        #gameContent h1 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
+        }
+
         .game-button {
             display: inline-block;
-            border-radius: 25px;
-            font-size: 20px;
-            padding: 10px 20px;
-            margin: 10px;
-            background-color: chartreuse;
-            color: black;
+            padding: 12px 25px;
+            margin: 15px;
+            border-radius: 50px;
+            font-size: 1.2rem;
             text-decoration: none;
-            cursor: pointer;
+            color: black;
+            font-weight: bold;
+            transition: all 0.3s;
+            min-width: 150px;
         }
-        
+
+        .game-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+        }
+
+        #btn-1-12 {
+            background-color: chartreuse;
+        }
+
         #btn-1-8 {
             background-color: aquamarine;
-            width: 150px;
         }
-        
+
         #btn-packs {
             background-color: cadetblue;
-            width: 200px;
         }
     </style>
 </head>
 <body>
-    <!-- Login Form -->
-    <div class="login-container" id="loginForm">
-        <h2>Eaglercraft Login</h2>
-        <input type="password" id="passwordInput" placeholder="Enter Password" autocomplete="off">
-        <button onclick="login()">Login</button>
-        <p class="error-message" id="errorMessage">Incorrect password!</p>
+    <!-- Introduction Screen -->
+    <div id="introScreen">
+        <img src="https://github.com/arthurlegal552/a/blob/main/logo.png" alt="Eaglercraft Logo" class="intro-image">
+        <h1 class="intro-title">EAGLERCRAFT</h1>
+        <p class="intro-subtitle">Experience Minecraft in your browser</p>
+        <button class="enter-button" id="enterButton">ENTER PORTAL</button>
     </div>
-    
-    <!-- Game Buttons (hidden until login) -->
+
+    <!-- Login Container -->
+    <div id="loginContainer">
+        <h2>Access Required</h2>
+        <input type="password" id="passwordInput" placeholder="Enter Access Code" autocomplete="off">
+        <button id="loginButton" onclick="login()">UNLOCK</button>
+        <p class="error-message" id="errorMessage">Invalid access code!</p>
+    </div>
+
+    <!-- Game Content -->
     <div id="gameContent">
         <h1>Eaglercraft</h1>
-        <a href="1.12.html" class="game-button">Play 1.12</a>
+        <a href="1.12.html" class="game-button" id="btn-1-12">Play 1.12</a>
         <a href="1.8.8.html" class="game-button" id="btn-1-8">Play 1.8.8</a>
         <a href="packs.html" class="game-button" id="btn-packs">Texture Packs</a>
     </div>
 
     <script>
-        // Simple password check (replace "yourpassword" with your desired password)
-        const CORRECT_PASSWORD = "eaglernotyou";
+        // Configuration - Set your password here
+        const ACCESS_CODE = "eaglernotyou";
         
-        function login() {
-            const password = document.getElementById("passwordInput").value;
-            const errorMsg = document.getElementById("errorMessage");
+        // DOM Elements
+        const introScreen = document.getElementById("introScreen");
+        const enterButton = document.getElementById("enterButton");
+        const loginContainer = document.getElementById("loginContainer");
+        const gameContent = document.getElementById("gameContent");
+        const passwordInput = document.getElementById("passwordInput");
+        const errorMessage = document.getElementById("errorMessage");
+
+        // Enter button click handler
+        enterButton.addEventListener("click", function() {
+            // Fade out introduction screen
+            introScreen.classList.add("fade-out");
             
-            if (password === CORRECT_PASSWORD) {
-                // Successful login
-                document.getElementById("loginForm").style.display = "none";
-                document.getElementById("gameContent").style.display = "block";
+            // Show login after fade completes
+            setTimeout(function() {
+                loginContainer.style.display = "block";
+                passwordInput.focus();
+            }, 1000);
+        });
+
+        // Login function
+        function login() {
+            const enteredPassword = passwordInput.value;
+            
+            if (enteredPassword === ACCESS_CODE) {
+                // Correct password
+                loginContainer.style.display = "none";
+                gameContent.style.display = "block";
                 
-                // Set session storage to remember login
-                sessionStorage.setItem("eaglercraftLoggedIn", "true");
+                // Store login in session
+                sessionStorage.setItem("eaglercraftAccess", "granted");
             } else {
                 // Wrong password
-                errorMsg.style.display = "block";
-                document.getElementById("passwordInput").value = "";
+                errorMessage.style.display = "block";
+                passwordInput.value = "";
+                passwordInput.focus();
+                
+                // Shake animation for error
+                loginContainer.style.animation = "shake 0.5s";
+                setTimeout(() => {
+                    loginContainer.style.animation = "";
+                }, 500);
             }
         }
-        
-        // Check if already logged in when page loads
-        window.onload = function() {
-            if (sessionStorage.getItem("eaglercraftLoggedIn") === "true") {
-                document.getElementById("loginForm").style.display = "none";
-                document.getElementById("gameContent").style.display = "block";
+
+        // Check for existing session on page load
+        window.addEventListener("load", function() {
+            if (sessionStorage.getItem("eaglercraftAccess") === "granted") {
+                introScreen.style.display = "none";
+                loginContainer.style.display = "none";
+                gameContent.style.display = "block";
             }
             
             // Allow pressing Enter to login
-            document.getElementById("passwordInput").addEventListener("keyup", function(event) {
+            passwordInput.addEventListener("keyup", function(event) {
                 if (event.key === "Enter") {
                     login();
                 }
             });
-        };
+        });
+
+        // Add shake animation dynamically
+        const style = document.createElement("style");
+        style.textContent = `
+            @keyframes shake {
+                0%, 100% { transform: translateX(0); }
+                10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+                20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>
