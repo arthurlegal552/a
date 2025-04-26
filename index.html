@@ -6,21 +6,31 @@
     <title>Eaglercraft 1.12</title>
     <link rel="icon" type="image/png" href="fav.png">
     <link rel="stylesheet" href="css.css">
+    <script>
+        // Quando o site carregar, pedir a senha
+        window.onload = function() {
+            var senhaCorreta = "1234"; // <-- Defina aqui a senha que você quiser
+            var tentativa = prompt("acesso restrito porfavor ensira um codigo de LAN:");
+
+            if (tentativa !== senhaCorreta) {
+                alert("acesso negado");
+                window.location.href = "https://google.com"; // Redireciona para outro lugar se errar
+            }
+        }
+    </script>
 </head>
 <body>
     <center>
         <h1>Eaglercraft</h1>
         <a href="1.12.html">
- <button style="border-radius: 25px; font-size: 20px; width: 100px; background-color: chartreuse;">Play 1.12</button>
+            <button style="border-radius: 25px; font-size: 20px; width: 100px; background-color: chartreuse;">Play 1.12</button>
         </a>    
         <a href="1.8.8.html">
             <button style="border-radius: 25px; font-size: 20px; width: 150px; background-color: aquamarine;">Play 1.8.8</button>
         </a>
         <a href="packs.html">
             <button style="border-radius: 25px; font-size: 20px; width: 200px; background-color: cadetblue;">Texture Packs</button>
-                   </a>    
-        
-
+        </a>    
     </center>
 </body>
 </html>
