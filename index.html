@@ -8,12 +8,13 @@
     <style>
         body {
             font-family: 'Arial', sans-serif;
-            background-color: #121212;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
             color: white;
             margin: 0;
             padding: 0;
             text-align: center;
             overflow-x: hidden;
+            min-height: 100vh;
         }
 
         /* Introduction Screen */
@@ -31,7 +32,7 @@
             z-index: 100;
             transition: opacity 1s ease-out;
         }
-
+        
         #introScreen.fade-out {
             opacity: 0;
             pointer-events: none;
@@ -80,13 +81,14 @@
         /* Login Container */
         #loginContainer {
             display: none;
-            background-color: rgba(45, 45, 45, 0.9);
+            background: rgba(45, 45, 45, 0.9);
             border-radius: 15px;
             padding: 30px;
             width: 350px;
             margin: 50px auto;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         /* Game Content */
@@ -104,18 +106,21 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* Game Buttons */
-        .game-section {
-            background-color: rgba(30, 30, 30, 0.7);
+        /* Game Sections */
+        .game-section, #creatorsSection {
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
             padding: 20px;
             margin-bottom: 30px;
             backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
         }
 
         .game-section h1 {
             font-size: 2.5rem;
             margin-bottom: 30px;
+            color: #00c6ff;
             text-shadow: 0 0 10px rgba(100, 200, 255, 0.5);
         }
 
@@ -152,11 +157,7 @@
         /* Creators Section */
         #creatorsSection {
             display: none;
-            background-color: rgba(30, 30, 30, 0.7);
-            border-radius: 15px;
-            padding: 20px;
             margin-top: 30px;
-            backdrop-filter: blur(5px);
         }
 
         .creators-title {
@@ -173,10 +174,11 @@
         }
 
         .creator-card {
-            background-color: rgba(50, 50, 50, 0.6);
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             padding: 20px;
             transition: transform 0.3s;
+            backdrop-filter: blur(10px);
         }
 
         .creator-card:hover {
@@ -341,10 +343,10 @@
         function toggleCreators() {
             if (creatorsSection.style.display === "none" || !creatorsSection.style.display) {
                 creatorsSection.style.display = "block";
-                document.querySelector('.toggle-creators').textContent = "Hide Creators ▲";
+                document.querySelector('.toggle-creators').textContent = "fechar ▲";
             } else {
                 creatorsSection.style.display = "none";
-                document.querySelector('.toggle-creators').textContent = "Meet the Creators ▼";
+                document.querySelector('.toggle-creators').textContent = "Conheça a eggcorp ▼";
             }
         }
 
