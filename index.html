@@ -8,15 +8,32 @@
     <link rel="icon" type="image/png" href="fav.png">
 
     <style>
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            color: white;
+        * {
             margin: 0;
             padding: 0;
-            text-align: center;
-            overflow-x: hidden;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1b2838 0%, #171a21 50%, #0e1014 100%);
+            color: #c7d5e0;
             min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1b2838;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #3a4f66;
+            border-radius: 4px;
         }
 
         /* INTRO SCREEN */
@@ -26,154 +43,463 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #1a2a3a, #0d1520);
+            background: linear-gradient(180deg, #1b2838 0%, #171a21 100%);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 100;
-            transition: opacity 1s ease-out;
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
         }
+        
         #introScreen.fade-out {
             opacity: 0;
+            transform: scale(1.1);
             pointer-events: none;
         }
 
         .intro-image {
-            width: 300px;
-            height: 300px;
-            margin-bottom: 30px;
-            animation: float 3s ease-in-out infinite;
+            width: 220px;
+            height: 220px;
+            margin-bottom: 40px;
+            animation: float 4s ease-in-out infinite;
         }
+        
         @keyframes float {
             0%,100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
+            50% { transform: translateY(-15px); }
         }
 
         .intro-title {
-            font-size: 3rem;
+            font-size: 3.5rem;
+            font-weight: 200;
+            letter-spacing: 4px;
             margin-bottom: 10px;
+            color: #66c0f4;
         }
 
         .intro-subtitle {
-            font-size: 1.2rem;
-            margin-bottom: 30px;
-            opacity: 0.8;
+            font-size: 1.1rem;
+            margin-bottom: 50px;
+            opacity: 0.7;
+            font-weight: 300;
         }
 
         .enter-button {
-            padding: 12px 30px;
-            font-size: 1.2rem;
-            background: linear-gradient(90deg,#00c6ff,#0072ff);
+            padding: 14px 60px;
+            font-size: 1.1rem;
+            background: linear-gradient(90deg, #06bfff 0%, #0088cc 100%);
             border: none;
-            border-radius: 50px;
+            border-radius: 4px;
             color: white;
             cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s;
+        }
+        
+        .enter-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(6, 191, 255, 0.3);
         }
 
-        /* LOGIN BOX */
-        #loginContainer {
+        /* LOGIN PAGE */
+        #loginPage {
             display: none;
-            background: rgba(45,45,45,0.9);
-            border-radius: 15px;
-            padding: 30px;
-            width: 350px;
-            margin: 50px auto;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-            backdrop-filter: blur(5px);
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+        
+        #loginPage.active {
+            display: flex;
         }
 
-        #loginContainer input {
-            width: 85%;
-            padding: 10px;
-            border-radius: 10px;
-            border: none;
-            margin-bottom: 10px;
+        .login-container {
+            background: rgba(30, 38, 48, 0.9);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 480px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+
+        .login-title {
+            font-size: 1.8rem;
+            font-weight: 300;
+            margin-bottom: 30px;
+            text-align: center;
+            color: #66c0f4;
+        }
+
+        .login-input {
+            width: 100%;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            background: #171d25;
+            border: 1px solid #3a4f66;
+            border-radius: 4px;
+            color: #c7d5e0;
             font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .login-input:focus {
+            border-color: #66c0f4;
         }
 
-        #loginContainer button {
-            padding: 12px 20px;
-            width: 90%;
-            border-radius: 10px;
+        .btn-login, .btn-guest {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
             border: none;
-            background: #00c6ff;
-            color: black;
-            font-weight: bold;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 500;
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-login {
+            background: linear-gradient(90deg, #06bfff 0%, #0088cc 100%);
+            color: white;
+        }
+        
+        .btn-login:hover {
+            background: linear-gradient(90deg, #21c8ff 0%, #0099dd 100%);
+        }
+
+        .btn-guest {
+            background: transparent;
+            border: 1px solid #3a4f66;
+            color: #8f98a0;
+            margin-top: 16px;
+        }
+        
+        .btn-guest:hover {
+            border-color: #66c0f4;
+            color: #66c0f4;
+        }
+
+        .login-divider {
+            text-align: center;
+            margin: 24px 0;
+            position: relative;
+        }
+        
+        .login-divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: #3a4f66;
+        }
+        
+        .login-divider span {
+            background: #1e2630;
+            padding: 0 16px;
+            position: relative;
+            z-index: 1;
+            color: #8f98a0;
         }
 
         .error-message {
             display: none;
-            color: #ff8080;
+            color: #ff5757;
+            padding: 10px;
+            margin-top: 10px;
+            background: rgba(255, 87, 87, 0.1);
+            border-radius: 4px;
+            text-align: center;
         }
 
-        /* GAME CONTENT */
-        #gameContent {
+        /* MAIN APP */
+        #mainApp {
             display: none;
-            margin-top: 40px;
-            animation: fadeIn 1s ease-out;
-            max-width: 900px;
-            margin-inline: auto;
+            min-height: 100vh;
+        }
+        
+        #mainApp.active {
+            display: block;
         }
 
-        .game-section {
-            background: rgba(255,255,255,0.08);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 30px;
-            backdrop-filter: blur(5px);
+        /* HEADER / NAVBAR */
+        .header {
+            background: #171a21;
+            padding: 16px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            border-bottom: 1px solid #222b36;
         }
 
-        .game-section h1 {
-            font-size: 2.5rem;
-            margin-bottom: 20px;
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        /* BUTTON STYLE */
-        .game-button, .krunk, .zazu, .tboi {
-            display: inline-block;
-            padding: 12px 25px;
-            margin: 12px;
-            border-radius: 50px;
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #66c0f4;
+            font-size: 1.5rem;
+            font-weight: 500;
+        }
+
+        .logo img {
+            height: 36px;
+            width: 36px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-item {
+            color: #b8b6b4;
             text-decoration: none;
-            font-weight: bold;
-            min-width: 160px;
-            color: black;
-            transition: 0.3s;
-        }
-        .game-button:hover, .krunk:hover, .zazu:hover, .tboi:hover {
-            transform: scale(1.05);
-        }
-
-        #btn-1-12 { background: chartreuse; }
-        #btn-1-8 { background: aquamarine; }
-        #btn-packs { background: cadetblue; }
-        .krunk { background: yellow; }
-        .zazu { background: #ffdf70; }
-        .tboi { background: white; }
-
-        #btn-external {
-            background: linear-gradient(90deg,#ff8a00,#e52e71);
-            color: white;
-        }
-
-        /* Eggcorp Toggle */
-        .toggle-creators {
-            margin-top: 20px;
-            background: linear-gradient(90deg,#ff6b00,#ff0084);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 50px;
+            font-size: 0.95rem;
+            transition: color 0.2s;
             cursor: pointer;
         }
-
-        #creatorsSection {
-            display: none;
-            margin-top: 25px;
+        
+        .nav-item:hover, .nav-item.active {
+            color: #66c0f4;
         }
 
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-name {
+            color: #66c0f4;
+            font-weight: 500;
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 30px 40px;
+        }
+
+        /* HERO BANNER */
+        .hero-banner {
+            background: linear-gradient(135deg, #0f1a28 0%, #1b2838 100%);
+            border-radius: 8px;
+            padding: 50px 60px;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            width: 50%;
+            background: linear-gradient(90deg, transparent, rgba(102, 192, 244, 0.05));
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 200;
+            margin-bottom: 12px;
+            color: #66c0f4;
+        }
+
+        .hero-subtitle {
+            font-size: 1.1rem;
+            opacity: 0.7;
+            margin-bottom: 30px;
+            max-width: 600px;
+        }
+
+        /* RECOMMENDATION SECTION - STEAM STYLE */
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+            color: #ffffff;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 50px;
+        }
+
+        .game-card {
+            background: #1e2630;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .game-card-image {
+            height: 140px;
+            background: linear-gradient(135deg, #2a3f5a 0%, #1b2838 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .game-card-info {
+            padding: 16px;
+        }
+
+        .game-card-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #ffffff;
+        }
+
+        .game-card-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+
+        .game-tag {
+            background: #3a4f66;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 0.75rem;
+            color: #b8b6b4;
+        }
+
+        .game-card-button {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(90deg, #47bfff 0%, #1a91c9 100%);
+            border: none;
+            border-radius: 4px;
+            color: white;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .game-card-button:hover {
+            background: linear-gradient(90deg, #5cc8ff 0%, #229ed4 100%);
+        }
+
+        .game-card.featured {
+            grid-column: span 2;
+        }
+
+        /* GAME CATEGORIES */
+        .category-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .category-tab {
+            padding: 8px 16px;
+            background: #2a3f5a;
+            border: none;
+            border-radius: 4px;
+            color: #b8b6b4;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .category-tab:hover, .category-tab.active {
+            background: #3a4f66;
+            color: #66c0f4;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #171a21;
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #222b36;
+            margin-top: 60px;
+            color: #5c7e8d;
+            font-size: 0.9rem;
+        }
+
+        /* CREATORS SECTION */
+        .creators-section {
+            background: #1e2630;
+            border-radius: 6px;
+            padding: 30px;
+            margin-top: 40px;
+        }
+
+        .creators-section h3 {
+            color: #66c0f4;
+            margin-bottom: 16px;
+            font-weight: 400;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .nav-menu {
+                display: none;
+            }
+            
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .game-card.featured {
+                grid-column: span 1;
+            }
+            
+            .hero-banner {
+                padding: 30px;
+            }
+            
+            .hero-title {
+                font-size: 1.8rem;
+            }
+            
+            .header {
+                padding: 12px 20px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
     </style>
 </head>
 
@@ -181,130 +507,333 @@
 
 <!-- INTRO SCREEN -->
 <div id="introScreen">
-    <img src="fav.png" class="intro-image">
+    <img src="fav.png" class="intro-image" alt="Eaglercraft Logo">
     <h1 class="intro-title">EAGLERCRAFT</h1>
-    <p class="intro-subtitle">Jogue Minecraft na nossa conexão privada</p>
-    <button id="enterButton" class="enter-button">Entrar na LAN</button>
+    <p class="intro-subtitle">Jogue Minecraft e mais na nossa conexão privada</p>
+    <button id="enterButton" class="enter-button">Continuar</button>
 </div>
 
-<!-- LOGIN -->
-<div id="loginContainer">
-    <h2>Acesso privado</h2>
-
-    <input type="text" id="nameInput" placeholder="Seu nome">
-    <input type="password" id="passwordInput" placeholder="Código de acesso">
-
-    <button onclick="login()">DESBLOQUEAR</button>
-
-    <p id="errorMessage" class="error-message"></p>
+<!-- LOGIN PAGE -->
+<div id="loginPage">
+    <div class="login-container fade-in">
+        <h2 class="login-title">Acesso ao Portal</h2>
+        
+        <input type="text" id="nameInput" class="login-input" placeholder="Nome de usuário">
+        <input type="password" id="passwordInput" class="login-input" placeholder="Código de acesso">
+        
+        <button class="btn-login" onclick="login()">ENTRAR</button>
+        
+        <div class="login-divider">
+            <span>ou</span>
+        </div>
+        
+        <button class="btn-guest" onclick="loginAsGuest()">CONTINUAR COMO CONVIDADO</button>
+        
+        <p id="errorMessage" class="error-message"></p>
+    </div>
 </div>
 
-<!-- MAIN CONTENT -->
-<div id="gameContent">
+<!-- MAIN APPLICATION -->
+<div id="mainApp">
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="fav.png" alt="Logo">
+                <span>Eaglercraft</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <span class="nav-item active" onclick="showSection('recommendations')">Recomendados</span>
+                <span class="nav-item" onclick="showSection('all')">Todos os Jogos</span>
+                <span class="nav-item" onclick="showSection('creators')">Sobre</span>
+            </nav>
+            
+            <div class="user-area">
+                <span class="user-name" id="currentUser">Usuário</span>
+            </div>
+        </div>
+    </header>
 
-    <div class="game-section">
-        <h1>Eaglercraft</h1>
-        <a href="1.12.html" class="game-button" id="btn-1-12">Play 1.12</a>
-        <a href="1.8.8.html" class="game-button" id="btn-1-8">Play 1.8.8</a>
-        <a href="https://eaglernet.netlify.app/" class="game-button" id="btn-1-8">Play 1.8.8 with mods</a>
-        <a href="https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods" class="game-button" id="btn-packs">mods</a>
-        <a href="https://8games.net/shooting-games/half-life-deathmatch.html" class="game-button" id="btn-packs">hldm</a>
+    <main class="container">
+        <!-- HERO BANNER -->
+        <div class="hero-banner">
+            <h1 class="hero-title">Bem-vindo de volta!</h1>
+            <p class="hero-subtitle">Explore nossa coleção de jogos, mods e ferramentas. Tudo disponível diretamente no navegador.</p>
+        </div>
 
-        <!-- ALL YOUR BUTTONS RESTO AQUI -->
-        <a href="https://fnaf-ashen.vercel.app/" target="_blank" class="game-button" id="btn-external">fnaw</a>
-        <a href="https://turbowarp.org/945855680?interpolate&size=660x360&hqpen" target="_blank" class="game-button" id="btn-external">among us</a>
-        <a href="https://tinyurl.com/2ws9zrr3" target="_blank" class="krunk">krunker</a>
-        <a href="https://uncanny-zazu.vercel.app/" target="_blank" class="zazu">zazu clicker</a>
-        <a href="https://archive.org/details/the-binding-of-isaac_202111#" target="_blank" class="tboi">tboi</a>
-        <a href="https://tinyurl.com/eaza7avu" target="_blank" class="tboi">win10</a>
-        <a href="https://toonks-game.vercel.app/" target="_blank" class="tboi">toonks</a>
-        <a href="https://chatx-azure.vercel.app/" target="_blank" class="tboi">chatx</a>
-        <a href="https://tinyurl.com/4damsjnh" target="_blank" class="tboi">rede canais</a>
-        <a href="https://tinyurl.com/3w6vafck" target="_blank" class="tboi">cloudmoon</a>
-        <a href="https://tinyurl.com/5cu3k42v" target="_blank" class="tboi">easyfun</a>
-        <a href="https://tinyurl.com/y5kcb6b2" target="_blank" class="tboi">free fire MAX</a>
-        <a href="instructions.html" target="_blank" class="tboi">instructions/disclaimer</a>
-        <a href="https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/" target="_blank" class="tboi">spongebob darts remake</a>
-        <a href="https://www.humanornot.ai/" target="_blank" class="tboi">human or ai</a>
-        <a href="https://js-launcher.on.websim.com/" target="_blank" class="tboi">minecraft launcher</a>
-        <a href="https://www.blacknut.com/en+" target="_blank" class="tboi">blacknut</a>
-        <a href="https://tinyurl.com/2ubpnp6u" target="_blank" class="tboi">stumble guys</a>
-        <a href="https://tinyurl.com/yc27wudc" target="_blank" class="tboi">proxyium</a>
-        <a href="https://rogold.onrender.com" target="_blank" class="tboi">rogold (ALPHA)</a>
-        <a href="https://gn-math.github.io/" target="_blank" class="tboi">gn math</a>
-        <a href="https://quackprep.org/" target="_blank" class="tboi">quackprep</a>
-        <a href="roblox.html" target="_blank" class="tboi">roblox</a>
-    </div>
+        <!-- RECOMMENDATIONS SECTION -->
+        <section id="recommendationsSection">
+            <h2 class="section-title">Recomendados para você</h2>
+            
+            <div class="games-grid">
+                <div class="game-card featured">
+                    <div class="game-card-image">
+                        <span style="font-size: 2rem; opacity: 0.7;">⛏️</span>
+                    </div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Eaglercraft 1.12</h3>
+                        <div class="game-card-tags">
+                            <span class="game-tag">Minecraft</span>
+                            <span class="game-tag">Ação</span>
+                            <span class="game-tag">Sobrevivência</span>
+                        </div>
+                        <button class="game-card-button" onclick="window.open('1.12.html', '_blank')">Jogar Agora</button>
+                    </div>
+                </div>
 
-    <button class="toggle-creators" onclick="toggleCreators()">Conheça a eggcorp ▼</button>
+                <div class="game-card">
+                    <div class="game-card-image">
+                        <span style="font-size: 1.5rem; opacity: 0.7;">🗡️</span>
+                    </div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Eaglercraft 1.8.8</h3>
+                        <div class="game-card-tags">
+                            <span class="game-tag">PvP</span>
+                            <span class="game-tag">Minigames</span>
+                        </div>
+                        <button class="game-card-button" onclick="window.open('1.8.8.html', '_blank')">Jogar</button>
+                    </div>
+                </div>
 
-    <div id="creatorsSection">
-        <h2>A Eggcorp</h2>
-        <p>LAXX1DUDE, Ayunami, notrealregi</p>
-    </div>
+                <div class="game-card">
+                    <div class="game-card-image">
+                        <span style="font-size: 1.5rem; opacity: 0.7;">🔧</span>
+                    </div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">1.8.8 com Mods</h3>
+                        <div class="game-card-tags">
+                            <span class="game-tag">Modificado</span>
+                            <span class="game-tag">EaglerForge</span>
+                        </div>
+                        <button class="game-card-button" onclick="window.open('https://eaglernet.netlify.app/', '_blank')">Jogar</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ALL GAMES SECTION -->
+        <section id="allSection" style="display: none;">
+            <h2 class="section-title">Todos os Jogos</h2>
+            
+            <div class="category-tabs">
+                <button class="category-tab active">Todos</button>
+                <button class="category-tab">Ação</button>
+                <button class="category-tab">Casual</button>
+                <button class="category-tab">Utilitários</button>
+                <button class="category-tab">Mods</button>
+            </div>
+            
+            <div class="games-grid">
+                <div class="game-card">
+                    <div class="game-card-image">🔫</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Krunker</h3>
+                        <div class="game-card-tags"><span class="game-tag">FPS</span></div>
+                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ws9zrr3', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">👻</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Five Nights at Freddy's</h3>
+                        <div class="game-card-tags"><span class="game-tag">Terror</span></div>
+                        <button class="game-card-button" onclick="window.open('https://fnaf-ashen.vercel.app/', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">🚀</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Among Us</h3>
+                        <div class="game-card-tags"><span class="game-tag">Multijogador</span></div>
+                        <button class="game-card-button" onclick="window.open('https://turbowarp.org/945855680?interpolate&size=660x360&hqpen', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">🎮</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Zazu Clicker</h3>
+                        <div class="game-card-tags"><span class="game-tag">Clicker</span></div>
+                        <button class="game-card-button" onclick="window.open('https://uncanny-zazu.vercel.app/', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">💀</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">The Binding of Isaac</h3>
+                        <div class="game-card-tags"><span class="game-tag">Roguelike</span></div>
+                        <button class="game-card-button" onclick="window.open('https://archive.org/details/the-binding-of-isaac_202111#', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">👤</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Human or Not</h3>
+                        <div class="game-card-tags"><span class="game-tag">IA</span></div>
+                        <button class="game-card-button" onclick="window.open('https://www.humanornot.ai/', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">🎯</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Stumble Guys</h3>
+                        <div class="game-card-tags"><span class="game-tag">Corrida</span></div>
+                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ubpnp6u', '_blank')">Jogar</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">🤖</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">ChatX</h3>
+                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
+                        <button class="game-card-button" onclick="window.open('https://chatx-azure.vercel.app/', '_blank')">Abrir</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">📐</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">GN Math</h3>
+                        <div class="game-card-tags"><span class="game-tag">Educação</span></div>
+                        <button class="game-card-button" onclick="window.open('https://gn-math.github.io/', '_blank')">Abrir</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image">🌐</div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Proxyium</h3>
+                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
+                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/yc27wudc', '_blank')">Abrir</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CREATORS SECTION -->
+        <section id="creatorsSection" style="display: none;">
+            <div class="creators-section">
+                <h3>Eggcorp</h3>
+                <p style="margin-bottom: 16px; opacity: 0.8;">Desenvolvido por LAXX1DUDE, Ayunami, notrealregi</p>
+                <p style="opacity: 0.6;">Projeto educacional © 2025</p>
+                
+                <div style="margin-top: 24px;">
+                    <button class="game-card-button" style="width: auto; padding: 10px 30px;" onclick="window.open('instructions.html', '_blank')">Termos e Instruções</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>by eggcorp — educacional ©2025</p>
+    </footer>
 </div>
 
 <script>
-/* USER LOGIN SYSTEM */
-const USERS = {
-    "notrealregi": "adminsonlycuzye",
-    "laxx1dude": "frameworkmaster",
-    "ayunami2000": "eagler2025",
-    "guest": "1234"
-};
+    /* USERS DATABASE */
+    const USERS = {
+        "notrealregi": "adminsonlycuzye",
+        "laxx1dude": "frameworkmaster",
+        "ayunami2000": "eagler2025",
+        "guest": "guest"
+    };
 
-const intro = document.getElementById("introScreen");
-const loginBox = document.getElementById("loginContainer");
-const game = document.getElementById("gameContent");
-const nameInput = document.getElementById("nameInput");
-const passInput = document.getElementById("passwordInput");
-const error = document.getElementById("errorMessage");
+    /* ELEMENT REFERENCES */
+    const intro = document.getElementById("introScreen");
+    const loginPage = document.getElementById("loginPage");
+    const mainApp = document.getElementById("mainApp");
+    const nameInput = document.getElementById("nameInput");
+    const passInput = document.getElementById("passwordInput");
+    const error = document.getElementById("errorMessage");
+    const currentUserEl = document.getElementById("currentUser");
 
-document.getElementById("enterButton").onclick = () => {
-    intro.classList.add("fade-out");
-    setTimeout(() => loginBox.style.display = "block", 900);
-};
+    /* INTRO BUTTON */
+    document.getElementById("enterButton").onclick = () => {
+        intro.classList.add("fade-out");
+        setTimeout(() => {
+            intro.style.display = "none";
+            loginPage.classList.add("active");
+        }, 800);
+    };
 
-function login() {
-    const user = nameInput.value.trim().toLowerCase();
-    const pass = passInput.value.trim();
+    /* LOGIN FUNCTIONS */
+    function login() {
+        const user = nameInput.value.trim().toLowerCase();
+        const pass = passInput.value.trim();
 
-    if (!USERS[user]) {
-        showError("Nome não autorizado");
-        return;
+        if (!user) {
+            showError("Insira um nome de usuário");
+            return;
+        }
+
+        if (!USERS[user]) {
+            showError("Usuário não encontrado");
+            return;
+        }
+
+        if (USERS[user] !== pass) {
+            showError("Código de acesso incorreto");
+            return;
+        }
+
+        completeLogin(user);
     }
 
-    if (USERS[user] !== pass) {
-        showError("Código incorreto");
-        return;
+    function loginAsGuest() {
+        completeLogin("Convidado");
     }
 
-    sessionStorage.setItem("user", user);
-    loginBox.style.display = "none";
-    game.style.display = "block";
-}
-
-function showError(msg) {
-    error.innerText = msg;
-    error.style.display = "block";
-}
-
-function toggleCreators() {
-    const sec = document.getElementById("creatorsSection");
-    sec.style.display = (sec.style.display === "block" ? "none" : "block");
-}
-
-window.onload = () => {
-    const user = sessionStorage.getItem("user");
-    if (user && USERS[user]) {
-        intro.style.display = "none";
-        loginBox.style.display = "none";
-        game.style.display = "block";
+    function completeLogin(username) {
+        sessionStorage.setItem("user", username);
+        currentUserEl.textContent = username.charAt(0).toUpperCase() + username.slice(1);
+        
+        loginPage.classList.remove("active");
+        mainApp.classList.add("active");
+        mainApp.classList.add("fade-in");
+        
+        error.style.display = "none";
     }
-};
+
+    function showError(msg) {
+        error.innerText = msg;
+        error.style.display = "block";
+    }
+
+    /* NAVIGATION */
+    function showSection(section) {
+        document.getElementById('recommendationsSection').style.display = section === 'recommendations' ? 'block' : 'none';
+        document.getElementById('allSection').style.display = section === 'all' ? 'block' : 'none';
+        document.getElementById('creatorsSection').style.display = section === 'creators' ? 'block' : 'none';
+        
+        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        event.target.classList.add('active');
+    }
+
+    /* AUTO LOGIN IF SESSION EXISTS */
+    window.onload = () => {
+        const user = sessionStorage.getItem("user");
+        if (user) {
+            intro.style.display = "none";
+            loginPage.classList.remove("active");
+            mainApp.classList.add("active");
+            currentUserEl.textContent = user.charAt(0).toUpperCase() + user.slice(1);
+        }
+    };
+
+    /* CATEGORY TABS */
+    document.querySelectorAll('.category-tab').forEach(tab => {
+        tab.onclick = function() {
+            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+        };
+    });
 </script>
-
-<footer>by eggcorp — educacional ©2025</footer>
 
 </body>
 </html>
