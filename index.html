@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eaglercraft Portal</title>
+    <link rel="icon" type="image/png" href="fav.png">
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* INTRO SCREEN */
+        #introScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #1a2a3a, #0d1520);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            transition: opacity 1s ease-out;
+        }
+        #introScreen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .intro-image {
+            width: 300px;
+            height: 300px;
+            margin-bottom: 30px;
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0%,100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .intro-title {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .intro-subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            opacity: 0.8;
+        }
+
+        .enter-button {
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(90deg,#00c6ff,#0072ff);
+            border: none;
+            border-radius: 50px;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* LOGIN BOX */
+        #loginContainer {
+            display: none;
+            background: rgba(45,45,45,0.9);
+            border-radius: 15px;
+            padding: 30px;
+            width: 350px;
+            margin: 50px auto;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(5px);
+        }
+
+        #loginContainer input {
+            width: 85%;
+            padding: 10px;
+            border-radius: 10px;
+            border: none;
+            margin-bottom: 10px;
+            font-size: 1rem;
+        }
+
+        #loginContainer button {
+            padding: 12px 20px;
+            width: 90%;
+            border-radius: 10px;
+            border: none;
+            background: #00c6ff;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .error-message {
+            display: none;
+            color: #ff8080;
+        }
+
+        /* GAME CONTENT */
+        #gameContent {
+            display: none;
+            margin-top: 40px;
+            animation: fadeIn 1s ease-out;
+            max-width: 900px;
+            margin-inline: auto;
+        }
+
+        .game-section {
+            background: rgba(255,255,255,0.08);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(5px);
+        }
+
+        .game-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTON STYLE */
+        .game-button, .krunk, .zazu, .tboi {
+            display: inline-block;
+            padding: 12px 25px;
+            margin: 12px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            min-width: 160px;
+            color: black;
+            transition: 0.3s;
+        }
+        .game-button:hover, .krunk:hover, .zazu:hover, .tboi:hover {
+            transform: scale(1.05);
+        }
+
+        #btn-1-12 { background: chartreuse; }
+        #btn-1-8 { background: aquamarine; }
+        #btn-packs { background: cadetblue; }
+        .krunk { background: yellow; }
+        .zazu { background: #ffdf70; }
+        .tboi { background: white; }
+
+        #btn-external {
+            background: linear-gradient(90deg,#ff8a00,#e52e71);
+            color: white;
+        }
+
+        /* Eggcorp Toggle */
+        .toggle-creators {
+            margin-top: 20px;
+            background: linear-gradient(90deg,#ff6b00,#ff0084);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        #creatorsSection {
+            display: none;
+            margin-top: 25px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<!-- INTRO SCREEN -->
+<div id="introScreen">
+    <img src="fav.png" class="intro-image">
+    <h1 class="intro-title">EAGLERCRAFT</h1>
+    <p class="intro-subtitle">Jogue Minecraft na nossa conexão privada</p>
+    <button id="enterButton" class="enter-button">Entrar na LAN</button>
+</div>
+
+<!-- LOGIN -->
+<div id="loginContainer">
+    <h2>Acesso privado</h2>
+
+    <input type="text" id="nameInput" placeholder="Seu nome">
+    <input type="password" id="passwordInput" placeholder="Código de acesso">
+
+    <button onclick="login()">DESBLOQUEAR</button>
+
+    <p id="errorMessage" class="error-message"></p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div id="gameContent">
+
+    <div class="game-section">
+        <h1>Eaglercraft</h1>
+        <a href="1.12.html" class="game-button" id="btn-1-12">Play 1.12</a>
+        <a href="1.8.8.html" class="game-button" id="btn-1-8">Play 1.8.8</a>
+        <a href="https://eaglernet.netlify.app/" class="game-button" id="btn-1-8">Play 1.8.8 with mods</a>
+        <a href="https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods" class="game-button" id="btn-packs">mods</a>
+        <a href="https://8games.net/shooting-games/half-life-deathmatch.html" class="game-button" id="btn-packs">hldm</a>
+
+        <!-- ALL YOUR BUTTONS RESTO AQUI -->
+        <a href="https://fnaf-ashen.vercel.app/" target="_blank" class="game-button" id="btn-external">fnaw</a>
+        <a href="https://turbowarp.org/945855680?interpolate&size=660x360&hqpen" target="_blank" class="game-button" id="btn-external">among us</a>
+        <a href="https://tinyurl.com/2ws9zrr3" target="_blank" class="krunk">krunker</a>
+        <a href="https://uncanny-zazu.vercel.app/" target="_blank" class="zazu">zazu clicker</a>
+        <a href="https://archive.org/details/the-binding-of-isaac_202111#" target="_blank" class="tboi">tboi</a>
+        <a href="https://tinyurl.com/eaza7avu" target="_blank" class="tboi">win10</a>
+        <a href="https://toonks-game.vercel.app/" target="_blank" class="tboi">toonks</a>
+        <a href="https://chatx-azure.vercel.app/" target="_blank" class="tboi">chatx</a>
+        <a href="https://tinyurl.com/4damsjnh" target="_blank" class="tboi">rede canais</a>
+        <a href="https://tinyurl.com/3w6vafck" target="_blank" class="tboi">cloudmoon</a>
+        <a href="https://tinyurl.com/5cu3k42v" target="_blank" class="tboi">easyfun</a>
+        <a href="https://tinyurl.com/y5kcb6b2" target="_blank" class="tboi">free fire MAX</a>
+        <a href="instructions.html" target="_blank" class="tboi">instructions/disclaimer</a>
+        <a href="https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/" target="_blank" class="tboi">spongebob darts remake</a>
+        <a href="https://www.humanornot.ai/" target="_blank" class="tboi">human or ai</a>
+        <a href="https://js-launcher.on.websim.com/" target="_blank" class="tboi">minecraft launcher</a>
+        <a href="https://www.blacknut.com/en+" target="_blank" class="tboi">blacknut</a>
+        <a href="https://tinyurl.com/2ubpnp6u" target="_blank" class="tboi">stumble guys</a>
+        <a href="https://tinyurl.com/yc27wudc" target="_blank" class="tboi">proxyium</a>
+        <a href="https://rogold.onrender.com" target="_blank" class="tboi">rogold (ALPHA)</a>
+        <a href="https://gn-math.github.io/" target="_blank" class="tboi">gn math</a>
+        <a href="https://quackprep.org/" target="_blank" class="tboi">quackprep</a>
+        <a href="roblox.html" target="_blank" class="tboi">roblox</a>
+    </div>
+
+    <button class="toggle-creators" onclick="toggleCreators()">Conheça a eggcorp ▼</button>
+
+    <div id="creatorsSection">
+        <h2>A Eggcorp</h2>
+        <p>LAXX1DUDE, Ayunami, notrealregi</p>
+    </div>
+</div>
+
+<script>
+/* USER LOGIN SYSTEM */
+const USERS = {
+    "notrealregi": "adminsonlycuzye",
+    "laxx1dude": "frameworkmaster",
+    "ayunami2000": "eagler2025",
+    "guest": "1234"
+};
+
+const intro = document.getElementById("introScreen");
+const loginBox = document.getElementById("loginContainer");
+const game = document.getElementById("gameContent");
+const nameInput = document.getElementById("nameInput");
+const passInput = document.getElementById("passwordInput");
+const error = document.getElementById("errorMessage");
+
+document.getElementById("enterButton").onclick = () => {
+    intro.classList.add("fade-out");
+    setTimeout(() => loginBox.style.display = "block", 900);
+};
+
+function login() {
+    const user = nameInput.value.trim().toLowerCase();
+    const pass = passInput.value.trim();
+
+    if (!USERS[user]) {
+        showError("Nome não autorizado");
+        return;
+    }
+
+    if (USERS[user] !== pass) {
+        showError("Código incorreto");
+        return;
+    }
+
+    sessionStorage.setItem("user", user);
+    loginBox.style.display = "none";
+    game.style.display = "block";
+}
+
+function showError(msg) {
+    error.innerText = msg;
+    error.style.display = "block";
+}
+
+function toggleCreators() {
+    const sec = document.getElementById("creatorsSection");
+    sec.style.display = (sec.style.display === "block" ? "none" : "block");
+}
+
+window.onload = () => {
+    const user = sessionStorage.getItem("user");
+    if (user && USERS[user]) {
+        intro.style.display = "none";
+        loginBox.style.display = "none";
+        game.style.display = "block";
+    }
+};
+</script>
+
+<footer>by eggcorp — educacional ©2025</footer>
+
+</body>
+</html>
