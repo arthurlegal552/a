@@ -518,16 +518,9 @@
     <div class="login-container fade-in">
         <h2 class="login-title">Acesso ao Portal</h2>
         
-        <input type="text" id="nameInput" class="login-input" placeholder="Nome de usuário">
-        <input type="password" id="passwordInput" class="login-input" placeholder="Código de acesso">
+        <input type="password" id="passwordInput" class="login-input" placeholder="Senha de acesso">
         
         <button class="btn-login" onclick="login()">ENTRAR</button>
-        
-        <div class="login-divider">
-            <span>ou</span>
-        </div>
-        
-        <button class="btn-guest" onclick="loginAsGuest()">CONTINUAR COMO CONVIDADO</button>
         
         <p id="errorMessage" class="error-message"></p>
     </div>
@@ -549,7 +542,7 @@
             </nav>
             
             <div class="user-area">
-                <span class="user-name" id="currentUser">Usuário</span>
+        
             </div>
         </div>
     </header>
@@ -567,7 +560,7 @@
             
             <div class="games-grid">
                 <div class="game-card featured">
-                    <div class="game-card-image" style="background: url('https://images.unsplash.com/photo-1587573089734-599d584d59d7?q=80&w=560&h=140&fit=crop') center/cover;">
+                    <div class="game-card-image" style="background: url('eaglercraft.jpg') center/cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(transparent 30%, rgba(0,0,0,0.85));"></div>
                     </div>
                     <div class="game-card-info">
@@ -582,7 +575,7 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image" style="background: url('https://images.unsplash.com/photo-1560419015-7c427e8ae5ba?q=80&w=280&h=140&fit=crop') center/cover;">
+                    <div class="game-card-image" style="background: url('minecraft188.jpg') center/cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
                     <div class="game-card-info">
@@ -595,19 +588,7 @@
                     </div>
                 </div>
 
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('https://images.unsplash.com/photo-1511512578047-dfb367046420?q=80&w=280&h=140&fit=crop') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">1.8.8 com Mods</h3>
-                        <div class="game-card-tags">
-                            <span class="game-tag">Modificado</span>
-                            <span class="game-tag">EaglerForge</span>
-                        </div>
-                        <button class="game-card-button" onclick="window.open('https://eaglernet.netlify.app/', '_blank')">Jogar</button>
-                    </div>
-                </div>
+
             </div>
         </section>
 
@@ -625,7 +606,7 @@
             
             <div class="games-grid">
                 <div class="game-card">
-                    <div class="game-card-image" style="background: url('https://cdn2.steamgriddb.com/grid/7500d50812a08866617e6703b5078e95.jpg') center/cover;">
+                    <div class="game-card-image" style="background: url('krunker.jpg') center/cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
                     <div class="game-card-info">
@@ -634,21 +615,20 @@
                         <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ws9zrr3', '_blank')">Jogar</button>
                     </div>
                 </div>
+
+                <div class="game-card">
+                    <div class="game-card-image" style="background: url('hldm.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
+                    </div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Half-Life Deathmatch</h3>
                         <div class="game-card-tags"><span class="game-tag">FPS</span><span class="game-tag">Clássico</span></div>
                         <button class="game-card-button" onclick="window.open('https://8games.net/shooting-games/half-life-deathmatch.html', '_blank')">Jogar</button>
                     </div>
                 </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Krunker</h3>
-                        <div class="game-card-tags"><span class="game-tag">FPS</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ws9zrr3', '_blank')">Jogar</button>
-                    </div>
-                </div>
 
                 <div class="game-card">
-                    <div class="game-card-image" style="background: url('https://cdn2.steamgriddb.com/grid/8c3c06e24f8f75240d7e21926786b70e.jpg') center/cover;">
+                    <div class="game-card-image" style="background: url('fnaf.png') center/cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
                     <div class="game-card-info">
@@ -659,7 +639,7 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image" style="background: url('https://cdn2.steamgriddb.com/grid/37d50129308020b81525634e1b073c17.jpg') center/cover;">
+                    <div class="game-card-image" style="background: url('amongus.jpg') center/cover;">
                         <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
                     <div class="game-card-info">
@@ -670,16 +650,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🎮</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Zazu Clicker</h3>
-                        <div class="game-card-tags"><span class="game-tag">Clicker</span></div>
-                        <button class="game-card-button" onclick="window.open('https://uncanny-zazu.vercel.app/', '_blank')">Jogar</button>
+                    <div class="game-card-image" style="background: url('isaac.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">💀</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">The Binding of Isaac</h3>
                         <div class="game-card-tags"><span class="game-tag">Roguelike</span></div>
@@ -688,16 +661,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">👤</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Human or Not</h3>
-                        <div class="game-card-tags"><span class="game-tag">IA</span></div>
-                        <button class="game-card-button" onclick="window.open('https://www.humanornot.ai/', '_blank')">Jogar</button>
+                    <div class="game-card-image" style="background: url('stumbleguys.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🎯</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Stumble Guys</h3>
                         <div class="game-card-tags"><span class="game-tag">Corrida</span></div>
@@ -706,43 +672,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🤖</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">ChatX</h3>
-                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
-                        <button class="game-card-button" onclick="window.open('https://chatx-azure.vercel.app/', '_blank')">Abrir</button>
+                    <div class="game-card-image" style="background: url('quack.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">📐</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">GN Math</h3>
-                        <div class="game-card-tags"><span class="game-tag">Educação</span></div>
-                        <button class="game-card-button" onclick="window.open('https://gn-math.github.io/', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🌐</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Proxyium</h3>
-                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/yc27wudc', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">💎</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">RoGold Alpha</h3>
-                        <div class="game-card-tags"><span class="game-tag">Roblox</span></div>
-                        <button class="game-card-button" onclick="window.open('https://rogold.onrender.com', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">📚</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">QuackPrep</h3>
                         <div class="game-card-tags"><span class="game-tag">Educação</span></div>
@@ -751,25 +683,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🎮</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Roblox</h3>
-                        <div class="game-card-tags"><span class="game-tag">Plataforma</span></div>
-                        <button class="game-card-button" onclick="window.open('roblox.html', '_blank')">Abrir</button>
+                    <div class="game-card-image" style="background: url('mods.png') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🎯</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Half-Life Deathmatch</h3>
-                        <div class="game-card-tags"><span class="game-tag">FPS</span></div>
-                        <button class="game-card-button" onclick="window.open('https://8games.net/shooting-games/half-life-deathmatch.html', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🔌</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Mods para Eaglercraft</h3>
                         <div class="game-card-tags"><span class="game-tag">Mods</span></div>
@@ -778,7 +694,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🎯</div>
+                    <div class="game-card-image" style="background: url('terrificspongebob.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
+                    </div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Spongebob Darts</h3>
                         <div class="game-card-tags"><span class="game-tag">Casual</span></div>
@@ -787,7 +705,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🚀</div>
+                    <div class="game-card-image" style="background: url('launchermc.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
+                    </div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Minecraft Launcher</h3>
                         <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
@@ -796,25 +716,9 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🎮</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Blacknut</h3>
-                        <div class="game-card-tags"><span class="game-tag">Cloud Gaming</span></div>
-                        <button class="game-card-button" onclick="window.open('https://www.blacknut.com/en+', '_blank')">Abrir</button>
+                    <div class="game-card-image" style="background: url('cloudmoon.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">📺</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Rede Canais</h3>
-                        <div class="game-card-tags"><span class="game-tag">Stream</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/4damsjnh', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">☁️</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Cloudmoon</h3>
                         <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
@@ -823,38 +727,24 @@
                 </div>
 
                 <div class="game-card">
-                    <div class="game-card-image">🎮</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">EasyFun</h3>
-                        <div class="game-card-tags"><span class="game-tag">Jogos</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/5cu3k42v', '_blank')">Abrir</button>
+                    <div class="game-card-image" style="background: url('win10.png') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
                     </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🔥</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Free Fire MAX</h3>
-                        <div class="game-card-tags"><span class="game-tag">Battle Royale</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/y5kcb6b2', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🎮</div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Toonks</h3>
-                        <div class="game-card-tags"><span class="game-tag">Jogo</span></div>
-                        <button class="game-card-button" onclick="window.open('https://toonks-game.vercel.app/', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image">🪟</div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Win10 Simulator</h3>
                         <div class="game-card-tags"><span class="game-tag">Simulador</span></div>
                         <button class="game-card-button" onclick="window.open('https://tinyurl.com/eaza7avu', '_blank')">Abrir</button>
+                    </div>
+                </div>
+
+                <div class="game-card">
+                    <div class="game-card-image" style="background: url('zazuclick.jpg') center/cover;">
+                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
+                    </div>
+                    <div class="game-card-info">
+                        <h3 class="game-card-title">Zazu Clicker</h3>
+                        <div class="game-card-tags"><span class="game-tag">Clicker</span></div>
+                        <button class="game-card-button" onclick="window.open('https://uncanny-zazu.vercel.app/', '_blank')">Jogar</button>
                     </div>
                 </div>
             </div>
@@ -880,22 +770,15 @@
 </div>
 
 <script>
-    /* USERS DATABASE */
-    const USERS = {
-        "notrealregi": "adminsonlycuzye",
-        "laxx1dude": "frameworkmaster",
-        "ayunami2000": "eagler2025",
-        "guest": "guest"
-    };
+    /* PASSWORD PROTECTION */
+    const SITE_PASSWORD = "statik";
 
     /* ELEMENT REFERENCES */
     const intro = document.getElementById("introScreen");
     const loginPage = document.getElementById("loginPage");
     const mainApp = document.getElementById("mainApp");
-    const nameInput = document.getElementById("nameInput");
     const passInput = document.getElementById("passwordInput");
     const error = document.getElementById("errorMessage");
-    const currentUserEl = document.getElementById("currentUser");
 
     /* INTRO BUTTON */
     document.getElementById("enterButton").onclick = () => {
@@ -906,36 +789,16 @@
         }, 800);
     };
 
-    /* LOGIN FUNCTIONS */
+    /* LOGIN FUNCTION */
     function login() {
-        const user = nameInput.value.trim().toLowerCase();
         const pass = passInput.value.trim();
 
-        if (!user) {
-            showError("Insira um nome de usuário");
+        if (pass !== SITE_PASSWORD) {
+            showError("Senha incorreta");
             return;
         }
 
-        if (!USERS[user]) {
-            showError("Usuário não encontrado");
-            return;
-        }
-
-        if (USERS[user] !== pass) {
-            showError("Código de acesso incorreto");
-            return;
-        }
-
-        completeLogin(user);
-    }
-
-    function loginAsGuest() {
-        completeLogin("Convidado");
-    }
-
-    function completeLogin(username) {
-        sessionStorage.setItem("user", username);
-        currentUserEl.textContent = username.charAt(0).toUpperCase() + username.slice(1);
+        sessionStorage.setItem("authenticated", "true");
         
         loginPage.classList.remove("active");
         mainApp.classList.add("active");
@@ -961,12 +824,11 @@
 
     /* AUTO LOGIN IF SESSION EXISTS */
     window.onload = () => {
-        const user = sessionStorage.getItem("user");
-        if (user) {
+        const authenticated = sessionStorage.getItem("authenticated");
+        if (authenticated === "true") {
             intro.style.display = "none";
             loginPage.classList.remove("active");
             mainApp.classList.add("active");
-            currentUserEl.textContent = user.charAt(0).toUpperCase() + user.slice(1);
         }
     };
 
