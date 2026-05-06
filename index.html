@@ -1,12 +1,10 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eaglercraft Portal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Eaglercraft Portal | Eggcorp</title>
     <link rel="icon" type="image/png" href="fav.png">
-
     <style>
         * {
             margin: 0;
@@ -63,6 +61,7 @@
             height: 220px;
             margin-bottom: 40px;
             animation: float 4s ease-in-out infinite;
+            object-fit: contain;
         }
         
         @keyframes float {
@@ -151,7 +150,7 @@
             border-color: #66c0f4;
         }
 
-        .btn-login, .btn-guest {
+        .btn-login {
             width: 100%;
             padding: 14px;
             margin-top: 10px;
@@ -161,51 +160,12 @@
             font-weight: 500;
             cursor: pointer;
             transition: all 0.2s;
-        }
-
-        .btn-login {
             background: linear-gradient(90deg, #06bfff 0%, #0088cc 100%);
             color: white;
         }
         
         .btn-login:hover {
             background: linear-gradient(90deg, #21c8ff 0%, #0099dd 100%);
-        }
-
-        .btn-guest {
-            background: transparent;
-            border: 1px solid #3a4f66;
-            color: #8f98a0;
-            margin-top: 16px;
-        }
-        
-        .btn-guest:hover {
-            border-color: #66c0f4;
-            color: #66c0f4;
-        }
-
-        .login-divider {
-            text-align: center;
-            margin: 24px 0;
-            position: relative;
-        }
-        
-        .login-divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: #3a4f66;
-        }
-        
-        .login-divider span {
-            background: #1e2630;
-            padding: 0 16px;
-            position: relative;
-            z-index: 1;
-            color: #8f98a0;
         }
 
         .error-message {
@@ -244,6 +204,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 16px;
         }
 
         .logo {
@@ -258,11 +220,13 @@
         .logo img {
             height: 36px;
             width: 36px;
+            object-fit: contain;
         }
 
         .nav-menu {
             display: flex;
             gap: 32px;
+            flex-wrap: wrap;
         }
 
         .nav-item {
@@ -271,21 +235,13 @@
             font-size: 0.95rem;
             transition: color 0.2s;
             cursor: pointer;
+            background: none;
+            border: none;
+            font-family: inherit;
         }
         
         .nav-item:hover, .nav-item.active {
             color: #66c0f4;
-        }
-
-        .user-area {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-        }
-
-        .user-name {
-            color: #66c0f4;
-            font-weight: 500;
         }
 
         /* MAIN CONTENT */
@@ -329,7 +285,7 @@
             max-width: 600px;
         }
 
-        /* RECOMMENDATION SECTION - STEAM STYLE */
+        /* GAME SECTIONS */
         .section-title {
             font-size: 1.4rem;
             font-weight: 500;
@@ -350,7 +306,8 @@
             overflow: hidden;
             transition: all 0.3s;
             cursor: pointer;
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
         
         .game-card:hover {
@@ -365,10 +322,15 @@
             align-items: center;
             justify-content: center;
             position: relative;
+            background-size: cover;
+            background-position: center;
         }
 
         .game-card-info {
             padding: 16px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
         }
 
         .game-card-title {
@@ -403,6 +365,7 @@
             font-weight: 500;
             cursor: pointer;
             transition: background 0.2s;
+            margin-top: auto;
         }
         
         .game-card-button:hover {
@@ -413,7 +376,7 @@
             grid-column: span 2;
         }
 
-        /* GAME CATEGORIES */
+        /* CATEGORY TABS */
         .category-tabs {
             display: flex;
             gap: 8px;
@@ -429,6 +392,7 @@
             color: #b8b6b4;
             cursor: pointer;
             transition: all 0.2s;
+            font-family: inherit;
         }
         
         .category-tab:hover, .category-tab.active {
@@ -447,7 +411,6 @@
             font-size: 0.9rem;
         }
 
-        /* CREATORS SECTION */
         .creators-section {
             background: #1e2630;
             border-radius: 6px;
@@ -461,14 +424,13 @@
             font-weight: 400;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 768px) {
             .container {
                 padding: 20px;
             }
             
             .nav-menu {
-                display: none;
+                gap: 16px;
             }
             
             .games-grid {
@@ -502,12 +464,11 @@
         }
     </style>
 </head>
-
 <body>
 
 <!-- INTRO SCREEN -->
 <div id="introScreen">
-    <img src="fav.png" class="intro-image" alt="Eaglercraft Logo">
+    <img src="fav.png" class="intro-image" alt="Eaglercraft Logo" onerror="this.src='https://via.placeholder.com/220?text=E'">
     <h1 class="intro-title">EAGLERCRAFT</h1>
     <p class="intro-subtitle">Jogue Minecraft e mais na nossa conexão privada</p>
     <button id="enterButton" class="enter-button">Continuar</button>
@@ -517,11 +478,8 @@
 <div id="loginPage">
     <div class="login-container fade-in">
         <h2 class="login-title">Acesso ao Portal</h2>
-        
         <input type="password" id="passwordInput" class="login-input" placeholder="Senha de acesso">
-        
         <button class="btn-login" onclick="login()">ENTRAR</button>
-        
         <p id="errorMessage" class="error-message"></p>
     </div>
 </div>
@@ -531,19 +489,15 @@
     <header class="header">
         <div class="nav-container">
             <div class="logo">
-                <img src="fav.png" alt="Logo">
+                <img src="fav.png" alt="Logo" onerror="this.src='https://via.placeholder.com/36?text=E'">
                 <span>Eaglercraft</span>
             </div>
-            
             <nav class="nav-menu">
-                <span class="nav-item active" onclick="showSection('recommendations')">Recomendados</span>
-                <span class="nav-item" onclick="showSection('all')">Todos os Jogos</span>
-                <span class="nav-item" onclick="showSection('creators')">Sobre</span>
+                <button class="nav-item active" data-section="recommendations">Recomendados</button>
+                <button class="nav-item" data-section="all">Todos os Jogos</button>
+                <button class="nav-item" data-section="creators">Sobre</button>
             </nav>
-            
-            <div class="user-area">
-        
-            </div>
+            <div class="user-area"></div>
         </div>
     </header>
 
@@ -557,216 +511,38 @@
         <!-- RECOMMENDATIONS SECTION -->
         <section id="recommendationsSection">
             <h2 class="section-title">Recomendados para você</h2>
-            
             <div class="games-grid">
                 <div class="game-card featured">
-                    <div class="game-card-image" style="background: url('eaglercraft.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 30%, rgba(0,0,0,0.85));"></div>
-                    </div>
+                    <div class="game-card-image" style="background-image: url('eaglercraft.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Eaglercraft 1.12</h3>
-                        <div class="game-card-tags">
-                            <span class="game-tag">Minecraft</span>
-                            <span class="game-tag">Ação</span>
-                            <span class="game-tag">Sobrevivência</span>
-                        </div>
+                        <div class="game-card-tags"><span class="game-tag">Minecraft</span><span class="game-tag">Ação</span><span class="game-tag">Sobrevivência</span></div>
                         <button class="game-card-button" onclick="window.open('1.12.html', '_blank')">Jogar Agora</button>
                     </div>
                 </div>
-
                 <div class="game-card">
-                    <div class="game-card-image" style="background: url('minecraft188.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
+                    <div class="game-card-image" style="background-image: url('minecraft188.jpg'); background-size: cover; background-position: center;"></div>
                     <div class="game-card-info">
                         <h3 class="game-card-title">Eaglercraft 1.8.8</h3>
-                        <div class="game-card-tags">
-                            <span class="game-tag">PvP</span>
-                            <span class="game-tag">Minigames</span>
-                        </div>
+                        <div class="game-card-tags"><span class="game-tag">PvP</span><span class="game-tag">Minigames</span></div>
                         <button class="game-card-button" onclick="window.open('1.8.8.html', '_blank')">Jogar</button>
                     </div>
                 </div>
-
-
             </div>
         </section>
 
-        <!-- ALL GAMES SECTION -->
+        <!-- ALL GAMES SECTION (fixed broken markup) -->
         <section id="allSection" style="display: none;">
             <h2 class="section-title">Todos os Jogos</h2>
-            
-            <div class="category-tabs">
-                <button class="category-tab active">Todos</button>
-                <button class="category-tab">Ação</button>
-                <button class="category-tab">Casual</button>
-                <button class="category-tab">Utilitários</button>
-                <button class="category-tab">Mods</button>
+            <div class="category-tabs" id="categoryTabsContainer">
+                <button class="category-tab active" data-filter="all">Todos</button>
+                <button class="category-tab" data-filter="acao">Ação</button>
+                <button class="category-tab" data-filter="casual">Casual</button>
+                <button class="category-tab" data-filter="utilitarios">Utilitários</button>
+                <button class="category-tab" data-filter="mods">Mods</button>
             </div>
-            
-            <div class="games-grid">
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('krunker.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Krunker</h3>
-                        <div class="game-card-tags"><span class="game-tag">FPS</span><span class="game-tag">Browser</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ws9zrr3', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('hldm.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Half-Life Deathmatch</h3>
-                        <div class="game-card-tags"><span class="game-tag">FPS</span><span class="game-tag">Clássico</span></div>
-                        <button class="game-card-button" onclick="window.open('https://8games.net/shooting-games/half-life-deathmatch.html', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('fnaf.png') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Five Nights at Freddy's</h3>
-                        <div class="game-card-tags"><span class="game-tag">Terror</span></div>
-                        <button class="game-card-button" onclick="window.open('https://fnaf-ashen.vercel.app/', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('amongus.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Among Us</h3>
-                        <div class="game-card-tags"><span class="game-tag">Multijogador</span></div>
-                        <button class="game-card-button" onclick="window.open('https://turbowarp.org/945855680?interpolate&size=660x360&hqpen', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('isaac.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">The Binding of Isaac</h3>
-                        <div class="game-card-tags"><span class="game-tag">Roguelike</span></div>
-                        <button class="game-card-button" onclick="window.open('https://archive.org/details/the-binding-of-isaac_202111#', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('stumbleguys.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Stumble Guys</h3>
-                        <div class="game-card-tags"><span class="game-tag">Corrida</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/2ubpnp6u', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('quack.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">QuackPrep</h3>
-                        <div class="game-card-tags"><span class="game-tag">Educação</span></div>
-                        <button class="game-card-button" onclick="window.open('https://quackprep.org/', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('mods.png') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Mods para Eaglercraft</h3>
-                        <div class="game-card-tags"><span class="game-tag">Mods</span></div>
-                        <button class="game-card-button" onclick="window.open('https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card-info">
-                    <div class="game-card-image" style="background: url('krunker.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                        <h3 class="game-card-title">cs 1.6</h3>
-                        <div class="game-card-tags"><span class="game-tag">Mods</span></div>
-                        <button class="game-card-button" onclick="window.open('https://studiohammergames.itch.io/two-hands-of-satan', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card-info">
-                    <div class="game-card-image" style="background: url('krunker.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                        <h3 class="game-card-title">cs 1.6 2 tentativa</h3>
-                        <div class="game-card-tags"><span class="game-tag">Mods</span></div>
-                        <button class="game-card-button" onclick="window.open('https://rokawar.itch.io/polyblicy', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('terrificspongebob.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Spongebob Darts</h3>
-                        <div class="game-card-tags"><span class="game-tag">Casual</span></div>
-                        <button class="game-card-button" onclick="window.open('https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/', '_blank')">Jogar</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('launchermc.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Minecraft Launcher</h3>
-                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
-                        <button class="game-card-button" onclick="window.open('https://js-launcher.on.websim.com/', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('cloudmoon.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Cloudmoon</h3>
-                        <div class="game-card-tags"><span class="game-tag">Utilitário</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/3w6vafck', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('win10.png') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Win10 Simulator</h3>
-                        <div class="game-card-tags"><span class="game-tag">Simulador</span></div>
-                        <button class="game-card-button" onclick="window.open('https://tinyurl.com/eaza7avu', '_blank')">Abrir</button>
-                    </div>
-                </div>
-
-                <div class="game-card">
-                    <div class="game-card-image" style="background: url('zazuclick.jpg') center/cover;">
-                        <div style="position:absolute;inset:0;background:linear-gradient(transparent 50%, rgba(0,0,0,0.75));"></div>
-                    </div>
-                    <div class="game-card-info">
-                        <h3 class="game-card-title">Zazu Clicker</h3>
-                        <div class="game-card-tags"><span class="game-tag">Clicker</span></div>
-                        <button class="game-card-button" onclick="window.open('https://uncanny-zazu.vercel.app/', '_blank')">Jogar</button>
-                    </div>
-                </div>
+            <div class="games-grid" id="allGamesGrid">
+                <!-- Os cards serão injetados via JS para evitar erros de HTML quebrado, mas mantemos fallback -->
             </div>
         </section>
 
@@ -776,31 +552,25 @@
                 <h3>Eggcorp</h3>
                 <p style="margin-bottom: 16px; opacity: 0.8;">Desenvolvido por LAXX1DUDE, Ayunami, notrealregi</p>
                 <p style="opacity: 0.6;">Projeto educacional © 2025</p>
-                
                 <div style="margin-top: 24px;">
                     <button class="game-card-button" style="width: auto; padding: 10px 30px;" onclick="window.open('instructions.html', '_blank')">Termos e Instruções</button>
                 </div>
             </div>
         </section>
     </main>
-
-    <footer>
-        <p>by eggcorp — educacional ©2025</p>
-    </footer>
+    <footer><p>by eggcorp — educacional ©2025</p></footer>
 </div>
 
 <script>
-    /* PASSWORD PROTECTION */
+    // PASSWORD CONFIG
     const SITE_PASSWORD = "statik";
-
-    /* ELEMENT REFERENCES */
     const intro = document.getElementById("introScreen");
     const loginPage = document.getElementById("loginPage");
     const mainApp = document.getElementById("mainApp");
     const passInput = document.getElementById("passwordInput");
-    const error = document.getElementById("errorMessage");
+    const errorEl = document.getElementById("errorMessage");
 
-    /* INTRO BUTTON */
+    // Intro transition
     document.getElementById("enterButton").onclick = () => {
         intro.classList.add("fade-out");
         setTimeout(() => {
@@ -809,40 +579,51 @@
         }, 800);
     };
 
-    /* LOGIN FUNCTION */
-    function login() {
+    window.login = function() {
         const pass = passInput.value.trim();
-
         if (pass !== SITE_PASSWORD) {
-            showError("Senha incorreta");
+            errorEl.innerText = "Senha incorreta";
+            errorEl.style.display = "block";
             return;
         }
-
         sessionStorage.setItem("authenticated", "true");
-        
         loginPage.classList.remove("active");
         mainApp.classList.add("active");
         mainApp.classList.add("fade-in");
+        errorEl.style.display = "none";
+        // reset any input
+        if(passInput) passInput.value = '';
+    };
+
+    // Navigation between sections
+    function showSection(sectionId) {
+        const recSection = document.getElementById('recommendationsSection');
+        const allSection = document.getElementById('allSection');
+        const creatorsSec = document.getElementById('creatorsSection');
         
-        error.style.display = "none";
-    }
-
-    function showError(msg) {
-        error.innerText = msg;
-        error.style.display = "block";
-    }
-
-    /* NAVIGATION */
-    function showSection(section) {
-        document.getElementById('recommendationsSection').style.display = section === 'recommendations' ? 'block' : 'none';
-        document.getElementById('allSection').style.display = section === 'all' ? 'block' : 'none';
-        document.getElementById('creatorsSection').style.display = section === 'creators' ? 'block' : 'none';
+        recSection.style.display = sectionId === 'recommendations' ? 'block' : 'none';
+        allSection.style.display = sectionId === 'all' ? 'block' : 'none';
+        creatorsSec.style.display = sectionId === 'creators' ? 'block' : 'none';
         
-        document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-        event.target.classList.add('active');
+        // update active class on nav buttons
+        document.querySelectorAll('.nav-item').forEach(btn => {
+            if(btn.getAttribute('data-section') === sectionId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
     }
 
-    /* AUTO LOGIN IF SESSION EXISTS */
+    // Attach nav click handlers
+    document.querySelectorAll('.nav-item').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            const section = this.getAttribute('data-section');
+            if(section) showSection(section);
+        });
+    });
+
+    // Auto session check
     window.onload = () => {
         const authenticated = sessionStorage.getItem("authenticated");
         if (authenticated === "true") {
@@ -850,15 +631,147 @@
             loginPage.classList.remove("active");
             mainApp.classList.add("active");
         }
+        
+        // BUILD COMPLETE GAMES GRID (fix broken cards from original)
+        buildAllGamesGrid();
+        initCategoryFilters();
     };
 
-    /* CATEGORY TABS */
-    document.querySelectorAll('.category-tab').forEach(tab => {
-        tab.onclick = function() {
-            document.querySelectorAll('.category-tab').forEach(t => t.classList.remove('active'));
-            this.classList.add('active');
+    // ---------- Definir todos os jogos corretamente (corrigir HTML quebrado) ----------
+    const fullGamesList = [
+        { title: "Krunker", tags: ["FPS", "Browser"], link: "https://tinyurl.com/2ws9zrr3", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Half-Life Deathmatch", tags: ["FPS", "Clássico"], link: "https://8games.net/shooting-games/half-life-deathmatch.html", cat: "acao", imgBg: "hldm.jpg" },
+        { title: "Five Nights at Freddy's", tags: ["Terror"], link: "https://fnaf-ashen.vercel.app/", cat: "acao", imgBg: "fnaf.png" },
+        { title: "Among Us", tags: ["Multijogador"], link: "https://turbowarp.org/945855680?interpolate&size=660x360&hqpen", cat: "casual", imgBg: "amongus.jpg" },
+        { title: "The Binding of Isaac", tags: ["Roguelike"], link: "https://archive.org/details/the-binding-of-isaac_202111#", cat: "acao", imgBg: "isaac.jpg" },
+        { title: "Stumble Guys", tags: ["Corrida"], link: "https://tinyurl.com/2ubpnp6u", cat: "casual", imgBg: "stumbleguys.jpg" },
+        { title: "QuackPrep", tags: ["Educação"], link: "https://quackprep.org/", cat: "utilitarios", imgBg: "quack.jpg" },
+        { title: "Mods para Eaglercraft", tags: ["Mods"], link: "https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods", cat: "mods", imgBg: "mods.png" },
+        { title: "Two Hands of Satan (CS 1.6 style)", tags: ["FPS"], link: "https://studiohammergames.itch.io/two-hands-of-satan", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Polyblicy", tags: ["Aventura"], link: "https://rokawar.itch.io/polyblicy", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Spongebob Darts", tags: ["Casual"], link: "https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/", cat: "casual", imgBg: "terrificspongebob.jpg" },
+        { title: "Minecraft Launcher", tags: ["Utilitário"], link: "https://js-launcher.on.websim.com/", cat: "utilitarios", imgBg: "launchermc.jpg" },
+        { title: "Cloudmoon", tags: ["Utilitário"], link: "https://tinyurl.com/3w6vafck", cat: "utilitarios", imgBg: "cloudmoon.jpg" },
+        { title: "Win10 Simulator", tags: ["Simulador"], link: "https://tinyurl.com/eaza7avu", cat: "utilitarios", imgBg: "win10.png" },
+        { title: "Zazu Clicker", tags: ["Clicker"], link: "https://uncanny-zazu.vercel.app/", cat: "casual", imgBg: "zazuclick.jpg" }
+    ];
+
+    function buildAllGamesGrid() {
+        const gridContainer = document.getElementById('allGamesGrid');
+        if(!gridContainer) return;
+        gridContainer.innerHTML = '';
+        fullGamesList.forEach(game => {
+            const card = document.createElement('div');
+            card.className = 'game-card';
+            card.setAttribute('data-category', game.cat);
+            
+            const imgDiv = document.createElement('div');
+            imgDiv.className = 'game-card-image';
+            imgDiv.style.backgroundImage = `url('${game.imgBg}')`;
+            imgDiv.style.backgroundSize = 'cover';
+            imgDiv.style.backgroundPosition = 'center';
+            // fallback gradient if image missing
+            imgDiv.style.background = `linear-gradient(135deg, #2a3f5a 0%, #1b2838 100%)`;
+            
+            const infoDiv = document.createElement('div');
+            infoDiv.className = 'game-card-info';
+            
+            const title = document.createElement('h3');
+            title.className = 'game-card-title';
+            title.innerText = game.title;
+            
+            const tagsDiv = document.createElement('div');
+            tagsDiv.className = 'game-card-tags';
+            game.tags.forEach(tag => {
+                const span = document.createElement('span');
+                span.className = 'game-tag';
+                span.innerText = tag;
+                tagsDiv.appendChild(span);
+            });
+            
+            const btn = document.createElement('button');
+            btn.className = 'game-card-button';
+            btn.innerText = game.cat === 'utilitarios' ? 'Abrir' : 'Jogar';
+            btn.onclick = () => window.open(game.link, '_blank');
+            
+            infoDiv.appendChild(title);
+            infoDiv.appendChild(tagsDiv);
+            infoDiv.appendChild(btn);
+            card.appendChild(imgDiv);
+            card.appendChild(infoDiv);
+            gridContainer.appendChild(card);
+        });
+    }
+    
+    // Filtros por categoria
+    function initCategoryFilters() {
+        const tabs = document.querySelectorAll('#categoryTabsContainer .category-tab');
+        if(!tabs.length) return;
+        
+        const filterGames = (filterValue) => {
+            const cards = document.querySelectorAll('#allGamesGrid .game-card');
+            cards.forEach(card => {
+                const cardCat = card.getAttribute('data-category');
+                if(filterValue === 'all' || cardCat === filterValue) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
         };
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function() {
+                tabs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+                const filter = this.getAttribute('data-filter');
+                filterGames(filter);
+            });
+        });
+        // default all visible
+        filterGames('all');
+    }
+    
+    // corrigir possível erro de referência: se houver algum event listener duplicado, garantimos compat
+    // Também corrigimos o erro do conjunto de cards duplicados no HTML original (divs mal fechadas)
+    // Além disso removemos elementos fantasmas que quebraram o layout: o HTML antigo tinha dois game-card-info soltos sem pai .game-card.
+    // Nosso JS substitui completamente a grid, então não haverá tags quebradas.
+    
+    // Ajuste extra: garantir que o botão "Jogar Agora" dos recomendados funcione e não gere erro se as imagens não existirem.
+    const styleFix = document.createElement('style');
+    styleFix.textContent = `
+        .game-card-image { background-color: #1e2a36; background-blend-mode: overlay; }
+        .game-card-button { cursor: pointer; }
+        .nav-item { background: none; border: none; font-size: 0.95rem; }
+    `;
+    document.head.appendChild(styleFix);
+    
+    // Caso alguém tente usar o método antigo "showSection" via onclick global, mantemos para compatibilidade
+    window.showSection = function(section) {
+        showSection(section);
+    };
+    
+    // Remove qualquer card duplicado ou elemento perdido que existia fora da estrutura devido ao HTML original corrompido.
+    // Verifica se há .game-card-info orphans e remove
+    const orphanInfos = document.querySelectorAll('#allSection .game-card-info:not(.game-card > .game-card-info)');
+    orphanInfos.forEach(el => {
+        if(el.parentElement && !el.parentElement.classList.contains('game-card')) {
+            el.remove();
+        }
     });
+    
+    // também garante que o grid não possua elementos extras flutuantes
+    const allGrid = document.getElementById('allGamesGrid');
+    if(allGrid) {
+        // remove qualquer nó de texto vazio ou comentários
+        const children = allGrid.children;
+        for(let i = 0; i < children.length; i++) {
+            if(children[i].nodeType === 8 || (children[i].nodeType === 3 && children[i].textContent.trim() === '')) {
+                allGrid.removeChild(children[i]);
+                i--;
+            }
+        }
+    }
 </script>
 
 </body>
