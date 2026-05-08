@@ -243,6 +243,7 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 30px 40px;
+            overflow-x: hidden;
         }
 
         .hero-banner {
@@ -287,19 +288,22 @@
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
             margin-bottom: 50px;
+            width: 100%;
         }
 
         .game-card {
             background: #1e2630;
-            border-radius: 6px;
+            border-radius: 8px;
             overflow: hidden;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             cursor: pointer;
             display: flex;
             flex-direction: column;
+            height: 100%;
+            min-width: 0;
         }
         
         .game-card:hover {
@@ -308,14 +312,12 @@
         }
 
         .game-card-image {
-            height: 140px;
+            height: 150px;
             background: linear-gradient(135deg, #2a3f5a 0%, #1b2838 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
             background-size: cover;
             background-position: center;
+            position: relative;
+            flex-shrink: 0;
         }
 
         .game-card-info {
@@ -323,28 +325,31 @@
             flex: 1;
             display: flex;
             flex-direction: column;
+            gap: 8px;
         }
 
         .game-card-title {
             font-size: 1rem;
-            font-weight: 500;
-            margin-bottom: 8px;
+            font-weight: 600;
             color: #ffffff;
+            line-height: 1.3;
+            word-wrap: break-word;
         }
 
         .game-card-tags {
             display: flex;
             gap: 8px;
             flex-wrap: wrap;
-            margin-bottom: 12px;
+            margin: 4px 0;
         }
 
         .game-tag {
             background: #3a4f66;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 0.75rem;
-            color: #b8b6b4;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            color: #e1e8ed;
+            font-weight: 500;
         }
 
         .game-card-button {
@@ -352,43 +357,59 @@
             padding: 10px;
             background: linear-gradient(90deg, #47bfff 0%, #1a91c9 100%);
             border: none;
-            border-radius: 4px;
+            border-radius: 6px;
             color: white;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.2s;
-            margin-top: auto;
+            transition: all 0.2s;
+            margin-top: 8px;
+            font-size: 0.9rem;
         }
         
         .game-card-button:hover {
             background: linear-gradient(90deg, #5cc8ff 0%, #229ed4 100%);
+            transform: scale(1.02);
         }
 
         .game-card.featured {
             grid-column: span 2;
         }
 
+        @media (max-width: 768px) {
+            .game-card.featured {
+                grid-column: span 1;
+            }
+            .games-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+        }
+
         .category-tabs {
             display: flex;
-            gap: 8px;
-            margin-bottom: 24px;
+            gap: 12px;
+            margin-bottom: 30px;
             flex-wrap: wrap;
+            overflow-x: auto;
+            padding-bottom: 8px;
         }
 
         .category-tab {
-            padding: 8px 16px;
+            padding: 8px 20px;
             background: #2a3f5a;
             border: none;
-            border-radius: 4px;
+            border-radius: 20px;
             color: #b8b6b4;
             cursor: pointer;
             transition: all 0.2s;
             font-family: inherit;
+            font-size: 0.9rem;
+            white-space: nowrap;
         }
         
         .category-tab:hover, .category-tab.active {
-            background: #3a4f66;
-            color: #66c0f4;
+            background: #66c0f4;
+            color: #171a21;
         }
 
         footer {
@@ -403,44 +424,42 @@
 
         .creators-section {
             background: #1e2630;
-            border-radius: 6px;
-            padding: 30px;
-            margin-top: 40px;
+            border-radius: 8px;
+            padding: 40px;
+            margin-top: 20px;
+            text-align: center;
         }
 
         .creators-section h3 {
             color: #66c0f4;
             margin-bottom: 16px;
-            font-weight: 400;
+            font-weight: 500;
+            font-size: 1.5rem;
         }
 
         @media (max-width: 768px) {
             .container {
-                padding: 20px;
+                padding: 20px 16px;
             }
             
             .nav-menu {
-                gap: 16px;
-            }
-            
-            .games-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .game-card.featured {
-                grid-column: span 1;
+                gap: 20px;
             }
             
             .hero-banner {
-                padding: 30px;
+                padding: 30px 20px;
             }
             
             .hero-title {
-                font-size: 1.8rem;
+                font-size: 1.5rem;
             }
             
             .header {
-                padding: 12px 20px;
+                padding: 12px 16px;
+            }
+            
+            .section-title {
+                font-size: 1.2rem;
             }
         }
 
@@ -451,6 +470,12 @@
 
         .fade-in {
             animation: fadeIn 0.5s ease-out;
+        }
+
+        /* Scroll behavior */
+        #allSection, #recommendationsSection, #creatorsSection {
+            width: 100%;
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -467,7 +492,7 @@
     <div class="login-container fade-in">
         <h2 class="login-title">Acesso ao Portal</h2>
         <form id="loginForm" onsubmit="return false;">
-            <input type="password" id="passwordInput" class="login-input" placeholder="Senha de acesso">
+            <input type="password" id="passwordInput" class="login-input" placeholder="Senha de acesso" autocomplete="off">
             <button type="submit" class="btn-login" onclick="login()">ENTRAR</button>
         </form>
         <p id="errorMessage" class="error-message"></p>
@@ -532,16 +557,16 @@
 
         <section id="creatorsSection" style="display: none;">
             <div class="creators-section">
-                <h3>Eggcorp</h3>
-                <p style="margin-bottom: 16px; opacity: 0.8;">Desenvolvido por LAXX1DUDE, Ayunami, notrealregi</p>
-                <p style="opacity: 0.6;">Projeto educacional © 2025</p>
-                <div style="margin-top: 24px;">
-                    <button class="game-card-button" style="width: auto; padding: 10px 30px;" onclick="window.open('instructions.html', '_blank')">Termos e Instruções</button>
+                <h3>🎮 Eggcorp Studios</h3>
+                <p style="margin-bottom: 20px; opacity: 0.9; font-size: 1.1rem;">Desenvolvido por LAXX1DUDE, Ayunami, notrealregi</p>
+                <p style="opacity: 0.7; margin-bottom: 30px;">Projeto educacional sem fins lucrativos © 2025</p>
+                <div>
+                    <button class="game-card-button" style="width: auto; padding: 12px 40px; display: inline-block;" onclick="window.open('instructions.html', '_blank')">📜 Termos e Instruções</button>
                 </div>
             </div>
         </section>
     </main>
-    <footer><p>by eggcorp — educacional ©2025</p></footer>
+    <footer><p>✨ by eggcorp — educacional | Todos os direitos aos respectivos autores ✨</p></footer>
 </div>
 
 <script>
@@ -563,7 +588,7 @@
     window.login = function() {
         const pass = passInput.value.trim();
         if (pass !== SITE_PASSWORD) {
-            errorEl.innerText = "Senha incorreta";
+            errorEl.innerText = "Senha incorreta. Tente novamente.";
             errorEl.style.display = "block";
             return false;
         }
@@ -597,6 +622,9 @@
                 btn.classList.remove('active');
             }
         });
+        
+        // Scroll to top when switching sections
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     document.querySelectorAll('.nav-item').forEach(btn => {
@@ -619,27 +647,28 @@
     };
 
     const fullGamesList = [
-        { title: "Krunker", tags: ["FPS", "Browser"], link: "https://tinyurl.com/2ws9zrr3", cat: "acao", imgBg: "krunker.jpg" },
-        { title: "Half-Life Deathmatch", tags: ["FPS", "Clássico"], link: "https://8games.net/shooting-games/half-life-deathmatch.html", cat: "acao", imgBg: "hldm.jpg" },
-        { title: "Five Nights at Freddy's", tags: ["Terror"], link: "https://fnaf-ashen.vercel.app/", cat: "acao", imgBg: "fnaf.png" },
-        { title: "Among Us", tags: ["Multijogador"], link: "https://turbowarp.org/945855680?interpolate&size=660x360&hqpen", cat: "casual", imgBg: "amongus.jpg" },
-        { title: "The Binding of Isaac", tags: ["Roguelike"], link: "https://archive.org/details/the-binding-of-isaac_202111#", cat: "acao", imgBg: "isaac.jpg" },
-        { title: "Stumble Guys", tags: ["Corrida"], link: "https://tinyurl.com/2ubpnp6u", cat: "casual", imgBg: "stumbleguys.jpg" },
-        { title: "QuackPrep", tags: ["Educação"], link: "https://quackprep.org/", cat: "utilitarios", imgBg: "quack.jpg" },
-        { title: "Mods para Eaglercraft", tags: ["Mods"], link: "https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods", cat: "mods", imgBg: "mods.png" },
-        { title: "Two Hands of Satan (CS 1.6 style)", tags: ["FPS"], link: "https://studiohammergames.itch.io/two-hands-of-satan", cat: "acao", imgBg: "krunker.jpg" },
-        { title: "Polyblicy", tags: ["Aventura"], link: "https://rokawar.itch.io/polyblicy", cat: "acao", imgBg: "krunker.jpg" },
-        { title: "Spongebob Darts", tags: ["Casual"], link: "https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/", cat: "casual", imgBg: "terrificspongebob.jpg" },
-        { title: "Minecraft Launcher", tags: ["Utilitário"], link: "https://js-launcher.on.websim.com/", cat: "utilitarios", imgBg: "launchermc.jpg" },
-        { title: "Cloudmoon", tags: ["Utilitário"], link: "https://tinyurl.com/3w6vafck", cat: "utilitarios", imgBg: "cloudmoon.jpg" },
-        { title: "Win10 Simulator", tags: ["Simulador"], link: "https://tinyurl.com/eaza7avu", cat: "utilitarios", imgBg: "win10.png" },
-        { title: "Zazu Clicker", tags: ["Clicker"], link: "https://uncanny-zazu.vercel.app/", cat: "casual", imgBg: "zazuclick.jpg" }
+        { title: "Krunker.io", tags: ["FPS", "Browser", "Multiplayer"], link: "https://tinyurl.com/2ws9zrr3", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Half-Life Deathmatch", tags: ["FPS", "Clássico", "Ação"], link: "https://8games.net/shooting-games/half-life-deathmatch.html", cat: "acao", imgBg: "hldm.jpg" },
+        { title: "Five Nights at Freddy's", tags: ["Terror", "Sobrevivência"], link: "https://fnaf-ashen.vercel.app/", cat: "acao", imgBg: "fnaf.png" },
+        { title: "Among Us", tags: ["Multijogador", "Social"], link: "https://turbowarp.org/945855680?interpolate&size=660x360&hqpen", cat: "casual", imgBg: "amongus.jpg" },
+        { title: "The Binding of Isaac", tags: ["Roguelike", "Aventura"], link: "https://archive.org/details/the-binding-of-isaac_202111#", cat: "acao", imgBg: "isaac.jpg" },
+        { title: "Stumble Guys", tags: ["Corrida", "Party"], link: "https://tinyurl.com/2ubpnp6u", cat: "casual", imgBg: "stumbleguys.jpg" },
+        { title: "QuackPrep", tags: ["Educação", "Estudos"], link: "https://quackprep.org/", cat: "utilitarios", imgBg: "quack.jpg" },
+        { title: "Mods Eaglercraft", tags: ["Mods", "Personalização"], link: "https://github.com/eaglerforge/EaglerForgeInjector/tree/main/examplemods", cat: "mods", imgBg: "mods.png" },
+        { title: "CS 1.6 Style", tags: ["FPS", "Tiro"], link: "https://studiohammergames.itch.io/two-hands-of-satan", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Polyblicy", tags: ["Aventura", "Indie"], link: "https://rokawar.itch.io/polyblicy", cat: "acao", imgBg: "krunker.jpg" },
+        { title: "Spongebob Darts", tags: ["Casual", "Dardos"], link: "https://terrific-spongebob-darts--broadmammoth5870526.on.websim.com/", cat: "casual", imgBg: "terrificspongebob.jpg" },
+        { title: "Minecraft Launcher", tags: ["Utilitário", "Ferramenta"], link: "https://js-launcher.on.websim.com/", cat: "utilitarios", imgBg: "launchermc.jpg" },
+        { title: "Cloudmoon", tags: ["Utilitário", "Nuvem"], link: "https://tinyurl.com/3w6vafck", cat: "utilitarios", imgBg: "cloudmoon.jpg" },
+        { title: "Win10 Simulator", tags: ["Simulador", "Windows"], link: "https://tinyurl.com/eaza7avu", cat: "utilitarios", imgBg: "win10.png" },
+        { title: "Zazu Clicker", tags: ["Clicker", "Incremental"], link: "https://uncanny-zazu.vercel.app/", cat: "casual", imgBg: "zazuclick.jpg" }
     ];
 
     function buildAllGamesGrid() {
         const gridContainer = document.getElementById('allGamesGrid');
         if(!gridContainer) return;
         gridContainer.innerHTML = '';
+        
         fullGamesList.forEach(game => {
             const card = document.createElement('div');
             card.className = 'game-card';
@@ -661,7 +690,7 @@
             
             const tagsDiv = document.createElement('div');
             tagsDiv.className = 'game-card-tags';
-            game.tags.forEach(tag => {
+            game.tags.slice(0, 3).forEach(tag => {
                 const span = document.createElement('span');
                 span.className = 'game-tag';
                 span.innerText = tag;
@@ -670,8 +699,11 @@
             
             const btn = document.createElement('button');
             btn.className = 'game-card-button';
-            btn.innerText = game.cat === 'utilitarios' ? 'Abrir' : 'Jogar';
-            btn.onclick = () => window.open(game.link, '_blank');
+            btn.innerText = game.cat === 'utilitarios' ? '🔧 Abrir' : '🎮 Jogar';
+            btn.onclick = (e) => {
+                e.stopPropagation();
+                window.open(game.link, '_blank');
+            };
             
             infoDiv.appendChild(title);
             infoDiv.appendChild(tagsDiv);
